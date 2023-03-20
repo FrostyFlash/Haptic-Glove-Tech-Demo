@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BooController : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
+    public float moveSpeed = 2.0f;
     public float detectionRange = 10.0f;
 
     private Transform player;
@@ -31,6 +31,7 @@ public class BooController : MonoBehaviour
         // Move towards the player if they're not visible
         if (!playerIsVisible)
         {
+            moveSpeed = 2.0f;
             transform.LookAt(player);
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         }
