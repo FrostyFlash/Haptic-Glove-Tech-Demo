@@ -113,6 +113,14 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Vector2 SmoothTurn
+        {
+            get
+            {
+                return SteamVR_Actions.default_SmoothTurn;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get
