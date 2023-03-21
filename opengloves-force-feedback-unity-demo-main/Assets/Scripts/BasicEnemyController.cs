@@ -9,17 +9,16 @@ public class BasicEnemyController : MonoBehaviour
     public float firingRange = 10.0f;
     public float wanderDistance = 10.0f;
     public float turnSpeed = 3.0f;
-    public float minWanderTime = 3.0f;
-    public float maxWanderTime = 10.0f;
 
     private Transform player;
     private bool playerDetected = false;
     private bool IdleRunning = false;
+
+
     private IEnumerator Idle()
     {
-        moveSpeed = 0;
-        // Loop forever
-    while (true) { 
+        IdleRunning = true;
+        // Loop forever 
         while (!playerDetected)
         {
 
@@ -52,7 +51,7 @@ public class BasicEnemyController : MonoBehaviour
                 yield return new WaitForSeconds(1.0f);
         }
     }
-    }
+
 
 
 
@@ -60,6 +59,7 @@ public class BasicEnemyController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(Idle());
+        IdleRunning = true;
     }
 
     void Update()
@@ -70,9 +70,16 @@ public class BasicEnemyController : MonoBehaviour
         if (distanceToPlayer < detectionRange)
         {
             playerDetected = true;
-        }else
+            StopCoroutine(Idle());
+            IdleRunning = false;
+        }
+        else
         {
             playerDetected = false;
+            if (!IdleRunning)
+            {
+                StartCoroutine(Idle());
+            }
         }
 
         // Move towards the player if they're not visible
@@ -82,9 +89,13 @@ public class BasicEnemyController : MonoBehaviour
             moveSpeed = 2.0f;
             transform.LookAt(player);
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            Debug.Log("Not in firing range");
+            Debug.Log(distanceToPlayer);
         }
         else if (playerDetected && distanceToPlayer <= firingRange)
         {
+            Debug.Log("In firing range");
+           
             // Add shooting logic for shooting enemies
 
             //

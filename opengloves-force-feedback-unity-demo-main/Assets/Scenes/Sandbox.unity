@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102624
+  m_Name: pb_Mesh-1656
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -293,7 +293,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102576
+  m_Name: pb_Mesh-1608
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -457,7 +457,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102636
+  m_Name: pb_Mesh-1668
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -666,8 +666,6 @@ MonoBehaviour:
   firingRange: 5
   wanderDistance: 10
   turnSpeed: 10
-  minWanderTime: 50
-  maxWanderTime: 100
 --- !u!1 &562387827
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +765,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102588
+  m_Name: pb_Mesh-1620
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -931,7 +929,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102564
+  m_Name: pb_Mesh-1596
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1188,6 +1186,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 429506, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1198,7 +1200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.89
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1368,7 +1370,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102600
+  m_Name: pb_Mesh-1632
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1589,7 +1591,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102612
+  m_Name: pb_Mesh-1644
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1753,7 +1755,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102540
+  m_Name: pb_Mesh-1572
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1917,7 +1919,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-102552
+  m_Name: pb_Mesh-1584
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2097,7 +2099,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &7897587087999837665
 PrefabInstance:
   m_ObjectHideFlags: 0
