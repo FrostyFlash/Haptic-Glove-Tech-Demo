@@ -118,7 +118,7 @@ public class BasicEnemyController : MonoBehaviour
 
             // Stop moving and turning when in contact with the player
             moveSpeed = 0.0f;
-            transform.LookAt(player);
+           
         }
     }
 }
