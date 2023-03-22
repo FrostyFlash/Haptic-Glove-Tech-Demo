@@ -14,6 +14,8 @@ public class BasicEnemyController : MonoBehaviour
     private bool playerDetected = false;
     private bool IdleRunning = false;
 
+    Animator animator;
+
 
     private IEnumerator Idle()
     {
@@ -21,7 +23,7 @@ public class BasicEnemyController : MonoBehaviour
         // Loop forever 
         while (!playerDetected)
         {
-
+            
             // Choose a random wander direction
             Vector3 wanderDirection = Random.insideUnitSphere * wanderDistance;
             wanderDirection.y = 0; // Set y to 0 to prevent vertical movement
@@ -34,12 +36,15 @@ public class BasicEnemyController : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
                 yield return null;
             }
+            yield return new WaitForSeconds(Random.Range(1.0f, 3.0f));
 
-                // Move forward in the current direction
+            // Move forward in the current direction
             float elapsedTime = 0.0f;
             float moveDuration = 2;
             Vector3 startPosition = transform.position;
             Vector3 endPosition = transform.position + transform.forward * 4.0f;
+            animator.SetBool("isWalking", true);
+            animator.SetBool("isIdle", false);
             while (elapsedTime < moveDuration)
             {
                 transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / moveDuration);
@@ -47,8 +52,10 @@ public class BasicEnemyController : MonoBehaviour
                 yield return null;
             }
 
-                // Wait for a random amount of time before choosing a new direction
-                yield return new WaitForSeconds(1.0f);
+            // Wait for a random amount of time before choosing a new direction
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isIdle", true);
+            yield return new WaitForSeconds(1.0f);
         }
     }
 
@@ -60,6 +67,8 @@ public class BasicEnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(Idle());
         IdleRunning = true;
+        animator = GetComponent<Animator>();
+        animator.SetBool("isIdle", true);
     }
 
     void Update()
@@ -72,13 +81,19 @@ public class BasicEnemyController : MonoBehaviour
             playerDetected = true;
             StopCoroutine(Idle());
             IdleRunning = false;
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isIdle", false);
+            animator.SetBool("isRunning", true);
+            
         }
         else
         {
+            animator.SetBool("isAttacking", false);
             playerDetected = false;
             if (!IdleRunning)
             {
                 StartCoroutine(Idle());
+                animator.SetBool("isIdle", true);
             }
         }
 
@@ -86,18 +101,19 @@ public class BasicEnemyController : MonoBehaviour
 
         if (distanceToPlayer > firingRange && playerDetected)
         {
-            moveSpeed = 2.0f;
+            animator.SetBool("isAttacking", false);
+            moveSpeed = 3.0f;
             transform.LookAt(player);
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-            Debug.Log("Not in firing range");
+            Debug.Log("Not in attack range");
             Debug.Log(distanceToPlayer);
         }
         else if (playerDetected && distanceToPlayer <= firingRange)
         {
-            Debug.Log("In firing range");
-           
-            // Add shooting logic for shooting enemies
+            Debug.Log("In attack range");
 
+            // Add shooting logic for shooting enemies
+            animator.SetBool("isAttacking", true);
             //
 
             // Stop moving and turning when in contact with the player
