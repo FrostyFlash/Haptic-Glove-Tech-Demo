@@ -6,17 +6,20 @@ TagManager:
   tags:
   - terrain
   - Enemy
+  - Weapon
+  - projectile
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Weapon
   - Water
   - UI
   - Player
   - Ground
   - Hurtbox
-  - 
+  - Enemy
   - 
   - 
   - 

@@ -29,7 +29,7 @@ public class BasicEnemyController : MonoBehaviour
             wanderDirection.y = 0; // Set y to 0 to prevent vertical movement
 
             // Rotate towards the wander direction
-            Debug.Log("Turning");
+            //Debug.Log("Turning");
             Quaternion targetRotation = Quaternion.LookRotation(wanderDirection);
             while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
             {
@@ -42,7 +42,7 @@ public class BasicEnemyController : MonoBehaviour
             float elapsedTime = 0.0f;
             float moveDuration = 2;
             Vector3 startPosition = transform.position;
-            Vector3 endPosition = transform.position + transform.forward * 4.0f;
+            Vector3 endPosition = transform.position + transform.forward * 1.0f;
             animator.SetBool("isWalking", true);
             animator.SetBool("isIdle", false);
             while (elapsedTime < moveDuration)
@@ -69,10 +69,17 @@ public class BasicEnemyController : MonoBehaviour
         IdleRunning = true;
         animator = GetComponent<Animator>();
         animator.SetBool("isIdle", true);
+        animator.SetBool("isDead", false);
     }
 
     void Update()
     {
+        if(animator.GetBool("isDead")==true)
+        {
+            Debug.Log("enemy dead");
+            Destroy(gameObject, 4);
+
+        }
         // Check if the player is within the detection range
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         //Debug.Log("Distance to player: " + distanceToPlayer);
@@ -105,12 +112,12 @@ public class BasicEnemyController : MonoBehaviour
             moveSpeed = 3.0f;
             transform.LookAt(player);
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-            Debug.Log("Not in attack range");
-            Debug.Log(distanceToPlayer);
+            //Debug.Log("Not in attack range");
+            //Debug.Log(distanceToPlayer);
         }
         else if (playerDetected && distanceToPlayer <= firingRange)
         {
-            Debug.Log("In attack range");
+           // Debug.Log("In attack range");
 
             // Add shooting logic for shooting enemies
             animator.SetBool("isAttacking", true);
