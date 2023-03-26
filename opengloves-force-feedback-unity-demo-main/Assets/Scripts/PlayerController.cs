@@ -13,10 +13,12 @@ public class PlayerController : MonoBehaviour
     public float speed = 1;
     public float turnSpeed = 45f;
     private CharacterController characterController;
+    public PlayerHurtBox playerHurtBox;
     // Start is called before the first frame update
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+        playerHurtBox = GetComponent<PlayerHurtBox>();
     }
     // Update is called once per frame
     void Update()
@@ -32,5 +34,10 @@ public class PlayerController : MonoBehaviour
             // Pivot the player on their current position
             transform.RotateAround(transform.position, Vector3.up, turnAmount * Time.deltaTime);
         }
+        if(playerHurtBox.isDead == true)
+        {
+            Debug.Log("Player is dead.");
+        }
+
     }
 }
