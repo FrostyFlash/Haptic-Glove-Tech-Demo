@@ -504,10 +504,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c9b0b97fad26c46bd9aa259b6a7597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 60
   currentHealth: 0
   rb: {fileID: 510573392}
   animator: {fileID: 510573391}
+  invulnerabilityTime: 0.25
 --- !u!64 &1660783107
 MeshCollider:
   m_ObjectHideFlags: 0

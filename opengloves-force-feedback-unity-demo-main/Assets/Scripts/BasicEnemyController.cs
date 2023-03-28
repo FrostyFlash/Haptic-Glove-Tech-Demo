@@ -21,7 +21,7 @@ public class BasicEnemyController : MonoBehaviour
     {
         IdleRunning = true;
         // Loop forever 
-        while (!playerDetected)
+        while (!playerDetected && animator.GetBool("isDead") == false)
         {
             
             // Choose a random wander direction
@@ -30,11 +30,14 @@ public class BasicEnemyController : MonoBehaviour
 
             // Rotate towards the wander direction
             //Debug.Log("Turning");
-            Quaternion targetRotation = Quaternion.LookRotation(wanderDirection);
-            while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+            if (animator.GetBool("isDead") == false)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-                yield return null;
+                Quaternion targetRotation = Quaternion.LookRotation(wanderDirection);
+                while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f && animator.GetBool("isDead") == false)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+                    yield return null;
+                }
             }
             yield return new WaitForSeconds(Random.Range(1.0f, 3.0f));
 
@@ -45,7 +48,7 @@ public class BasicEnemyController : MonoBehaviour
             Vector3 endPosition = transform.position + transform.forward * 1.0f;
             animator.SetBool("isWalking", true);
             animator.SetBool("isIdle", false);
-            while (elapsedTime < moveDuration)
+            while (elapsedTime < moveDuration && animator.GetBool("isDead") == false)
             {
                 transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / moveDuration);
                 elapsedTime += Time.deltaTime;
@@ -65,67 +68,70 @@ public class BasicEnemyController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        StartCoroutine(Idle());
-        IdleRunning = true;
         animator = GetComponent<Animator>();
         animator.SetBool("isIdle", true);
         animator.SetBool("isDead", false);
+        StartCoroutine(Idle());
+        IdleRunning = true;    
     }
 
     void Update()
     {
-        if(animator.GetBool("isDead")==true)
+        if (animator.GetBool("isDead") == true)
         {
             Debug.Log("enemy dead");
             Destroy(gameObject, 4);
 
-        }
-        // Check if the player is within the detection range
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        //Debug.Log("Distance to player: " + distanceToPlayer);
-        if (distanceToPlayer < detectionRange)
-        {
-            playerDetected = true;
-            StopCoroutine(Idle());
-            IdleRunning = false;
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isIdle", false);
-            animator.SetBool("isRunning", true);
-            
-        }
-        else
-        {
-            animator.SetBool("isAttacking", false);
-            playerDetected = false;
-            if (!IdleRunning)
-            {
-                StartCoroutine(Idle());
-                animator.SetBool("isIdle", true);
-            }
-        }
+        } else if(animator.GetBool("isDead") == false)
+                {
+                    // Check if the player is within the detection range
+                    float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+                    //Debug.Log("Distance to player: " + distanceToPlayer);
+                    if (distanceToPlayer < detectionRange)
+                        {
+                            playerDetected = true;
+                            StopCoroutine(Idle());
+                            IdleRunning = false;
+                            animator.SetBool("isWalking", false);
+                            animator.SetBool("isIdle", false);
+                            animator.SetBool("isRunning", true);
 
-        // Move towards the player if they're not visible
+                        }
+                        else
+                            {
+                                animator.SetBool("isAttacking", false);
+                                playerDetected = false;
+                                if (!IdleRunning)
+                                    {
+                                        StartCoroutine(Idle());
+                                        animator.SetBool("isIdle", true);
+                                    }
+                            }
 
-        if (distanceToPlayer > firingRange && playerDetected)
-        {
-            animator.SetBool("isAttacking", false);
-            moveSpeed = 3.0f;
-            transform.LookAt(player);
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-            //Debug.Log("Not in attack range");
-            //Debug.Log(distanceToPlayer);
-        }
-        else if (playerDetected && distanceToPlayer <= firingRange)
-        {
-           // Debug.Log("In attack range");
+                // Move towards the player if they're not visible
 
-            // Add shooting logic for shooting enemies
-            animator.SetBool("isAttacking", true);
-            //
+                    if (distanceToPlayer > firingRange && playerDetected)
+                        {
+                            animator.SetBool("isAttacking", false);
+                            moveSpeed = 3.0f;
+                            transform.LookAt(player);
+                            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                            //Debug.Log("Not in attack range");
+                            //Debug.Log(distanceToPlayer);
+                        }
+                    else if (playerDetected && distanceToPlayer <= firingRange)
+                        {
+                            // Debug.Log("In attack range");
 
-            // Stop moving and turning when in contact with the player
-            moveSpeed = 0.0f;
-           
-        }
+                            // Add shooting logic for shooting enemies
+                            animator.SetBool("isAttacking", true);
+                            transform.LookAt(player);
+                            //
+
+                            // Stop moving and turning when in contact with the player
+                            moveSpeed = 0.0f;
+
+                        }
+                }
     }
 }

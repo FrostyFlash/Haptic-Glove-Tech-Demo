@@ -8,17 +8,33 @@ public class PlayerHurtBox : MonoBehaviour
     public int maxHealth = 100; // The maximum health of the object
     public int currentHealth; // The current health of the object
     public bool isDead = false;
-
+    public float invulnerabilityTime = 1.0f; // The duration of invulnerability after being hit
+    private bool isInvulnerable = false; // Whether the object is currently invulnerable
+    private float invulnerabilityTimer = 0.0f; // The remaining time of invulnerability
 
     void Start()
     {
         currentHealth = maxHealth;
     }
 
+    void Update()
+    {
+        if (isInvulnerable)
+        {
+            // Decrease the remaining invulnerability time
+            invulnerabilityTimer -= Time.deltaTime;
+
+            if (invulnerabilityTimer <= 0.0f)
+            {
+                // End the invulnerability period
+                isInvulnerable = false;
+            }
+        }
+    }
+
     void OnTriggerEnter(Collider col)
     {
-        // Check if the colliding object has a specific tag or component, such as a "Weapon" tag or a "DamageDealer" component.
-        if (col.gameObject.tag == "Enemy")
+        if (!isInvulnerable && col.gameObject.tag == "Enemy")
         {
             HitboxScript hitbox = col.gameObject.GetComponent<HitboxScript>();
 
@@ -32,9 +48,15 @@ public class PlayerHurtBox : MonoBehaviour
                     // Execute code to destroy or disable the object
                     isDead = true;
                 }
+                else
+                {
+                    // Start the invulnerability period
+                    isInvulnerable = true;
+                    invulnerabilityTimer = invulnerabilityTime;
+                }
             }
-
         }
     }
 
 }
+
