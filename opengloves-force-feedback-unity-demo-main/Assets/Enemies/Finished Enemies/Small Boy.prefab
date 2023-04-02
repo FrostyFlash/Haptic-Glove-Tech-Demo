@@ -76,7 +76,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2a677dd7be0f40e45a04fb173f212376, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.1336641
+      value: 1.84
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2a677dd7be0f40e45a04fb173f212376, type: 3}
       propertyPath: m_LocalPosition.y
@@ -492,7 +492,7 @@ MonoBehaviour:
   firingRange: 0.5
   wanderDistance: 10
   turnSpeed: 10
---- !u!114 &510573394
+--- !u!114 &2514602016045973590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -509,6 +509,7 @@ MonoBehaviour:
   rb: {fileID: 510573392}
   animator: {fileID: 510573391}
   invulnerabilityTime: 0.25
+  Sparks_PS: {fileID: 2234146733392049103, guid: 7fb81d0e70af6494a916e32f756fe0d9, type: 3}
 --- !u!64 &1660783107
 MeshCollider:
   m_ObjectHideFlags: 0

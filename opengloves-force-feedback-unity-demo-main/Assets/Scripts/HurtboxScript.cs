@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class HurtboxScript : MonoBehaviour
 {
 
@@ -12,6 +14,7 @@ public class HurtboxScript : MonoBehaviour
     public float invulnerabilityTime = 1.0f; // The duration of invulnerability after being hit
     private bool isInvulnerable = false; // Whether the object is currently invulnerable
     private float invulnerabilityTimer = 0.0f; // The remaining time of invulnerability
+    public GameObject Sparks_PS;
 
     void Start()
     {
@@ -33,6 +36,8 @@ public class HurtboxScript : MonoBehaviour
         }
     }
 
+
+
     void OnCollisionEnter(Collision col)
     {
         if (!isInvulnerable && col.gameObject.tag == "Weapon")
@@ -52,6 +57,8 @@ public class HurtboxScript : MonoBehaviour
                 }
                 else
                 {
+                    Vector3 collisionPoint = col.contacts[0].point;
+                    Instantiate(Sparks_PS, collisionPoint, Quaternion.identity);
                     // Start the invulnerability period
                     isInvulnerable = true;
                     invulnerabilityTimer = invulnerabilityTime;
